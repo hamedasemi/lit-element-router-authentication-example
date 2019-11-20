@@ -67,6 +67,7 @@ class App extends routerMixin(LitElement) {
     this.route = route;
     this.params = params;
     this.query = query;
+    this.data = data;
     console.log(route, params, query, data);
   }
 
