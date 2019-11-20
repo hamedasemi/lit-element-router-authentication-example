@@ -1,5 +1,5 @@
 /**
- * LitElement Router Pages
+ * LitElement Router
  *
  * https://github.com/hamedasemi/lit-element-router
  * https://www.npmjs.com/package/lit-element-router
@@ -18,6 +18,7 @@ class App extends routerMixin(LitElement) {
     return {
       route: { type: String },
       params: { type: Object },
+      data: { type: Object },
       query: { type: Object }
     };
   }
@@ -29,11 +30,7 @@ class App extends routerMixin(LitElement) {
         pattern: "",
         data: { title: "Home" },
         guard: () => {
-          return new Promise((resolve, reject) => {
-            setTimeout(() => {
-              resolve(prompt("password", true) === "true");
-            }, 2000);
-          });
+          return true;
         }
       },
       {
@@ -42,7 +39,14 @@ class App extends routerMixin(LitElement) {
       },
       {
         name: "user",
-        pattern: "user/:id"
+        pattern: "user/:id",
+        guard: () => {
+          return new Promise((resolve, reject) => {
+            setTimeout(() => {
+              resolve(prompt("Authenticate", true) === "true");
+            }, 2000);
+          });
+        }
       },
       {
         name: "not-found",
@@ -56,6 +60,7 @@ class App extends routerMixin(LitElement) {
     this.route = "";
     this.params = {};
     this.query = {};
+    this.data = {};
   }
 
   router(route, params, query, data) {
@@ -76,7 +81,7 @@ class App extends routerMixin(LitElement) {
         <h1 route="home">Home</h1>
         <h1 route="info">Info ${this.query.data}</h1>
         <h1 route="user">User ${this.params.id}</h1>
-        <h1 route="not-authorized">Not Authorized</h1>
+        <h1 route="not-authenticated">Not Authenticated</h1>
         <h1 route="not-found">Not Found</h1>
       </app-main>
     `;
