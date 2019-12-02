@@ -42,9 +42,7 @@ class App extends routerMixin(LitElement) {
         pattern: "user/:id",
         guard: () => {
           return new Promise((resolve, reject) => {
-            setTimeout(() => {
-              resolve(prompt("Authenticate", true) === "true");
-            }, 2000);
+            resolve(prompt("Authenticate", true) === "true");
           });
         }
       },
