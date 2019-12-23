@@ -40,10 +40,15 @@ class App extends routerMixin(LitElement) {
       {
         name: "user",
         pattern: "user/:id",
-        guard: () => {
-          return new Promise((resolve, reject) => {
-            resolve(prompt("Authenticate", true) === "true");
-          });
+        authentication: {
+          unauthenticated: {
+            name: "user-unauthenticated"
+          },
+          authenticate: () => {
+            return new Promise((resolve, reject) => {
+              resolve(prompt("Authenticate", true) === "true");
+            });
+          }
         }
       },
       {
@@ -80,7 +85,7 @@ class App extends routerMixin(LitElement) {
         <h1 route="home">Home</h1>
         <h1 route="info">Info ${this.query.data}</h1>
         <h1 route="user">User ${this.params.id}</h1>
-        <h1 route="not-authenticated">Not Authenticated</h1>
+        <h1 route="user-unauthenticated">User Unauthenticated</h1>
         <h1 route="not-found">Not Found</h1>
       </app-main>
     `;
