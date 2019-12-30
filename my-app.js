@@ -47,7 +47,7 @@ class App extends LitElement {
           },
           authenticate: () => {
             return new Promise((resolve, reject) => {
-              resolve(prompt("Authenticate", true) === "true");
+              resolve(confirm("Authenticate"));
             });
           }
         }
